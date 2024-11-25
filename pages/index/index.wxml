@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="chat">
+  <!-- 消息列表 -->
+  <!-- 用于展示消息列表 -->
+  <scroll-view scroll-y scroll-into-view="item_{{lastId}}">  <!-- 实现坚直方向的可滚动区域 -->
+    <!-- 动态消息列表数据源为list -->
+    <view wx:for="{{list}}" wx:key="id" class="chat-message chat-message-{{item.role}}" 
+    id="item_{{item.id}}">
+      <!-- 用于展示消息文本内容。 -->
+      <view class="chat-content"><view>{{item.content}}</view></view>
+      <!-- 显示消息发送者的头像 -->
+      <image class="chat-avatar" src=""/>
+    </view>
+  </scroll-view>
+</view>
+
+<view class="message">
+  <input type="text" bindinput="input" placeholder="请输入聊天内容..." value="{{content}}" />
+  <button type="primary" bind:tap="send" size="small">发送</button>
+</view>

@@ -1,0 +1,85 @@
+// index.js
+Page({ 
+  ws: null,
+  onLoad: function () {
+    // 用wx.connectSocket方法连接WebSocket 
+    const ws = wx.connectSocket({
+      url: 'ws://127.0.0.1:3000',
+      success: resConnect => {
+        console.log(resConnect)
+      },
+      fail: resConnectError => {
+        console.log(resConnectError)
+      }
+    })
+    // 实现在收到服务器端传来的消息时对数据进行处理
+    ws.onMessage(msg => {
+      const data = JSON.parse(msg.data)
+      const list = this.data.list
+      const lastId = list.length
+      list.push({
+        id: lastId,
+        content: data.content,
+        role: 'server'
+      })
+      this.setData({list, lastId})
+    })
+    ws.onClose(res => {
+      console.log(res)
+    })
+    this.ws = ws
+  },
+  
+  // 实现关闭WebSocket连接
+  onUnload: function () {
+    this.ws.close()
+  },
+
+
+  data: {
+    content: '',
+    list: [],
+    lastId: ''
+  },
+  message: '',
+
+
+  // input实现将输入框输入的文本保存到message中
+  input: function (e) {
+    this.message = e.detail.value
+  },
+
+
+  // 实现点击按钮将message中的内容发送到服务器
+  send: function () {
+    // 判断消息是否为空
+    if (!this.message) {
+      wx.showToast({
+        title: '消息不为空',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    // 发送消息到服务器
+    this.ws.send({
+      data: this.message
+    })
+    // 将data中的list数组取出来, 表示消息列表
+    const list =  this.data.list
+    // 将list数组的长度保存为lastId
+    const lastId = list.length
+    // push方法将这些数据保存到数组中
+    list.push({
+      id: lastId,
+      content: this.message,
+      role: 'me'
+    })
+    // setData将这些数据根新
+    this.setData({list, lastId, content: ''})
+    // 然后清空this.message
+    this.message = ''
+  },
+
+
+})

@@ -1,0 +1,99 @@
+/**index.wxss**/
+/* 当前页面的初始设置 */
+page {
+  background-color: #f7f7f7;  /*定义背景颜色为 #f7f7f7，这是一个浅灰色(填充整个区域)*/
+  display: flex;  /*允许容器内的子元素在不同屏幕尺寸和方向下灵活地调整大小和排列*/
+  flex-direction: column;  /*Flexbox 是一种布局模型，便于子元素的排列和对齐*/
+  height: 100%;  /*Flexbox 的主轴方向设置为 纵向（从上到下*/
+}
+
+/* 消息列表 */
+.chat {
+  flex: 1;  /*它告诉父容器：这个元素应占据所有剩余空间。*/
+  padding: 30rpx;  /*设置元素的内边距(rpx是像素单位)*/
+  overflow: hidden;  /*当超出边界就隐藏起来*/
+}
+
+/* 坚直方向可滚动区域 */
+scroll-view {
+  height: 100%;
+}
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;  /*颜色设置为透明*/
+}
+
+/* 消息快的容器 */
+.chat-message {
+  display: flex;  /*让子元素*/
+  margin-bottom: 30rpx;  /*每条消息之间留出 30rpx 的垂直间距*/
+}
+
+/* 聊天头像样式 */
+.chat-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 5rpx;  /*给头像顶部留出5像素*/
+  border-radius: 50%;  /*将头像设置为圆形*/
+}
+
+/* 消息内容容器，位于头像旁边 */
+.chat-content {
+  flex: 1;  /*内容区域占用聊天块的剩余空间*/
+}
+
+/* 具体的消息文本样式 */
+.chat-content>view {
+  padding: 5rpx 20rpx;  /*内边距，保证文本不会贴边*/
+  border-radius: 6rpx;  /*圆角样式*/
+  word-break: break-all;  /*强制长单词换行*/
+  line-height: 60rpx;  /*设置行高，使文字垂直居中*/
+  margin: 0 10rpx;  /*在左右两侧留出 10rpx 的间距*/
+}
+
+/* 定义用户发送消息的样式 */
+.chat-message-me .chat-content>view {
+  float: right;  /*消息内容右对齐*/
+  margin-left: 50rpx;  /*留出 50rpx 的左边距，避免与头像重叠*/
+  background-color: #95d4ff;  /*背景色图为蓝色*/
+}
+
+/* 定义服务器（或机器人）消息的样式 */
+.chat-message-server .chat-content {
+  order: 1;  /*使用 Flexbox 的排列顺序属性，使内容优先排列*/
+}
+
+/* 服务器消息文本的样式 */
+.chat-message-server .chat-content>view {
+  float: left;  /*消息内容左对齐*/
+  margin-right: 50rpx;  /*留出 50rpx 的右边距*/
+  background-color: lightgreen;  /*背景色为绿色*/
+}
+
+/* 输入框和按钮所在的底部区域样式 */
+.message {
+  height: 102rpx;  /*设置输入区域的高度*/
+  padding: 10rpx;  /*内边距，防止内容贴边*/
+  background-color: #fff;  /*设置背景颜色为白色*/
+  border-top: 2rpx solid #eee;  /*添加一条浅灰色的顶部边框，分隔聊天区域和输入区域*/
+  box-sizing: border-box;  /*包括内边距和边框在元素总尺寸中*/
+  display: flex;  /*让输入框和按钮并排排列*/
+}
+
+/* 输入框样式 */
+.message input {
+  width: 90%;
+  height: 100%;
+  line-height: 80rpx;  /*设置文字行高，使文字垂直居中*/
+  padding: 0 10rpx;  /*水平方向添加内边距*/
+  font-size: 35rpx;  /*设置字体大小*/
+  color: #666;
+}
+
+/* 发送按钮样式 */
+.message button {
+  font-size: 35rpx;  /*设置按钮文字的字体大小*/
+}
